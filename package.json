@@ -1,0 +1,10 @@
+{
+  "name": "contactlist",
+  "version": "1.0",
+  "description": "Contacts List using Node.js, MongoDB and Express 4",
+  "dependencies": {
+    "express": "4.x",
+    "body-parser": "*",
+    "mongojs" : "*"
+	}
+  }
