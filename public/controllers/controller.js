@@ -1,12 +1,26 @@
+var contactsApp = angular.module('contactsApp',['ui.bootstrap']);
 
-angular.module('ContactsApp',[]).controller('AppCtrl',function($scope, $http) {
+contactsApp.controller('AppCtrl',function($scope, $http) {
 	console.log("This is a Message from Controller");
+ 
 
+ $scope.contactlist = [];
+ $scope.pageSize = 5;
+ $scope.currentPage = 1;
+
+ 
+
+ 
+ $scope.sort = function(keyname){
+        $scope.sortKey = keyname;   //set the sortKey to the param passed
+        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+    }
+ 
   var refresh = function(){
     $http.get('/contactlist').success(function(response){
     	console.log("This is a Data from Controller");
     	$scope.contactlist = response;
-    	$scope.contact= "";
+    	$scope.contact= null;
     });
 
   };
@@ -18,6 +32,7 @@ angular.module('ContactsApp',[]).controller('AppCtrl',function($scope, $http) {
     	$http.post('/contactlist',$scope.contact).success(function(response){
     		console.log(response);
     		refresh();
+        location.reload();
     	});
 
     };
@@ -49,4 +64,10 @@ angular.module('ContactsApp',[]).controller('AppCtrl',function($scope, $http) {
       $scope.contact = "";
     };
 	
+})
+.filter('startFrom',function(){
+  return function(data, start){
+    return data.slice(start);
+  }
+
 });
